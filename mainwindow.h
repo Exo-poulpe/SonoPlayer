@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "dialog.h"
 #include <string>
+#include <iostream>
+#include <fstream>
 #include <QMessageBox>
 #include <QMediaPlayer>
 #include <QTimer>
@@ -34,6 +36,8 @@ private slots:
 
     void EndOfSong();
 
+    void on_prgTime_sliderReleased();
+
 private:
     QString CleanName(QString path);
     void SetMusicList();
@@ -44,8 +48,11 @@ private:
     QStringList music = QStringList();
     double pistNumber = 0;
     bool playPause = false; // False if not play
+    bool fileExist = false; // False if file not exist
     QMediaPlayer *player = new QMediaPlayer();
     qint64 musicDuration = 0;
     int musicPosition = 0;
+    QString configFilePath = "config.ini";
+    QString ReadFirstLineFile(QString path);
 };
 #endif // MAINWINDOW_H

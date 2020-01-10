@@ -1,42 +1,78 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+using namespace std;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    Dialog *dlg = new Dialog();
-    if (dlg->exec() == QDialog::Accepted)
+    QFileInfo check_file(configFilePath);
+        if (check_file.exists() && check_file.isFile()) {
+            this->fileExist = true;
+        } else {
+            this->fileExist = false;
+        }
+    if(!fileExist)
     {
-        ui->setupUi(this);
-        QPalette pal = this->ui->btnClose->palette();
-        pal.setColor(QPalette::Button, QColor(Qt::blue));
-        this->ui->btnClose->setPalette(pal);
-        this->ui->btnClose->update();
-        #ifdef Q_OS_WIN32
-        setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint );
-        #endif
+        Dialog *dlg = new Dialog();
+        if (dlg->exec() != QDialog::Accepted)
+        {
+            exit(0);
+        }
         if(dlg->GetPath() != "")
         {
-            QRect rec = QApplication::desktop()->screenGeometry();
-            this->move(rec.width()-240,rec.height()-135);
-            //tmr->callOnTimeout(SLOT(UpdateProgressBar()),Qt::AutoConnection);
-            QObject::connect(tmr, SIGNAL(timeout()), this, SLOT(UpdateProgressBar()), Qt::AutoConnection);
-            connect(player, SIGNAL(player.positionChanged()),this,SLOT(EndOfSong()));
-            player->seekableChanged(true);
             this->path = dlg->GetPath();
-            this->ui->lblName->setText(CleanName(this->path));
-            SetMusicList();
-            UpdateLblName(music[pistNumber]);
-        }
-        else
+            ofstream out;
+            out.open(configFilePath.toStdString());
+            out << dlg->GetPath().toStdString();
+            out.close();
+
+        }else
         {
             QMessageBox *msg = new QMessageBox();
             msg->setText("Nothing selected");
             msg->setWindowTitle("Error");
             msg->exec();
+            exit(1);
         }
+
+    }else
+    {
+        this->path = ReadFirstLineFile(configFilePath);
     }
+
+
+    ui->setupUi(this);
+    QPalette pal = this->ui->btnClose->palette();
+    pal.setColor(QPalette::Button, QColor(Qt::blue));
+    this->ui->btnClose->setPalette(pal);
+    this->ui->btnClose->update();
+#ifdef Q_OS_WIN32
+    setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint );
+#endif
+    QRect rec = QApplication::desktop()->screenGeometry();
+    this->move(rec.width()-240,rec.height()-135);
+    //tmr->callOnTimeout(SLOT(UpdateProgressBar()),Qt::AutoConnection);
+    QObject::connect(tmr, SIGNAL(timeout()), this, SLOT(UpdateProgressBar()), Qt::AutoConnection);
+    connect(player, SIGNAL(player.positionChanged()),this,SLOT(EndOfSong()));
+    player->seekableChanged(true);
+    this->ui->lblName->setText(CleanName(this->path));
+    SetMusicList();
+    UpdateLblName(music[pistNumber]);
+
+}
+QString MainWindow::ReadFirstLineFile(QString path)
+{
+    ifstream infile;
+    string nLine;
+    infile.open(path.toStdString());
+    if(infile.good())
+    {
+        getline(infile,nLine);
+    }
+    return QString::fromStdString(nLine);
+
 }
 
 
@@ -175,4 +211,9 @@ void MainWindow::on_btnBack_clicked()
         this->musicPosition = 0;
     }
 
+}
+
+void MainWindow::on_prgTime_sliderReleased()
+{
+    this->player->setPosition(this->ui->prgTime->value());
 }
