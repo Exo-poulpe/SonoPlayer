@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Icon">
+        <file>DL/back.png</file>
+        <file>DL/forward.png</file>
+        <file>DL/pause.png</file>
+        <file>DL/play.png</file>
+        <file>DL/player.png</file>
+        <file>DL/mark-qestion.png</file>
+    </qresource>
+</RCC>
