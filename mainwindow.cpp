@@ -139,7 +139,7 @@ void MainWindow::on_btnPlayPause_clicked()
     {
         if(!tmr->isActive())
         {
-            tmr->start(1000);
+            tmr->start(500);
         }
         this->ui->btnPlayPause->setIcon(QIcon(":/Icon/DL/pause.png"));
         playPause = true;

@@ -29,6 +29,8 @@ FORMS += \
     dialog.ui \
     mainwindow.ui
 
+win32:RC_ICONS += D:\C++\QT\SonoPlayer\DL\player.ico
+
 TRANSLATIONS += \
     SonoPlayer_en_CH.ts
 
