@@ -63,6 +63,9 @@
      <iconset resource="Res.qrc">
       <normaloff>:/Icon/DL/play.png</normaloff>:/Icon/DL/play.png</iconset>
     </property>
+    <property name="shortcut">
+     <string>Space</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnNext">
     <property name="geometry">
@@ -106,6 +109,9 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>close</string>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -116,6 +122,9 @@
     </property>
     <property name="text">
      <string>X</string>
+    </property>
+    <property name="shortcut">
+     <string>Esc</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblDuration">
@@ -229,6 +238,9 @@ border-radius: 4px;
       <width>21</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>open select music folder</string>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
