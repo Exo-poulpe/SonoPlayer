@@ -38,10 +38,14 @@ private slots:
 
     void on_prgTime_sliderReleased();
 
+    void on_btnClose_2_clicked();
+
 private:
     QString CleanName(QString path);
     void SetMusicList();
     void UpdateLblName(QString songName);
+    void MainWindow::DialogForm();
+    QString ReadFirstLineFile(QString path);
     QTimer *tmr = new QTimer;
     Ui::MainWindow *ui;
     QString path;
@@ -53,6 +57,6 @@ private:
     qint64 musicDuration = 0;
     int musicPosition = 0;
     QString configFilePath = "config.ini";
-    QString ReadFirstLineFile(QString path);
+
 };
 #endif // MAINWINDOW_H

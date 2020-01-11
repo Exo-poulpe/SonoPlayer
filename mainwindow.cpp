@@ -15,27 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     if(!fileExist)
     {
-        Dialog *dlg = new Dialog();
-        if (dlg->exec() != QDialog::Accepted)
-        {
-            exit(0);
-        }
-        if(dlg->GetPath() != "")
-        {
-            this->path = dlg->GetPath();
-            ofstream out;
-            out.open(configFilePath.toStdString());
-            out << dlg->GetPath().toStdString();
-            out.close();
-
-        }else
-        {
-            QMessageBox *msg = new QMessageBox();
-            msg->setText("Nothing selected");
-            msg->setWindowTitle("Error");
-            msg->exec();
-            exit(1);
-        }
+        DialogForm();
 
     }else
     {
@@ -75,6 +55,30 @@ QString MainWindow::ReadFirstLineFile(QString path)
 
 }
 
+void MainWindow::DialogForm()
+{
+    Dialog *dlg = new Dialog();
+    if (dlg->exec() != QDialog::Accepted)
+    {
+        exit(0);
+    }
+    if(dlg->GetPath() != "")
+    {
+        this->path = dlg->GetPath();
+        ofstream out;
+        out.open(configFilePath.toStdString());
+        out << dlg->GetPath().toStdString();
+        out.close();
+
+    }else
+    {
+        QMessageBox *msg = new QMessageBox();
+        msg->setText("Nothing selected");
+        msg->setWindowTitle("Error");
+        msg->exec();
+        exit(1);
+    }
+}
 
 QString MainWindow::CleanName(QString path)
 {
@@ -216,4 +220,13 @@ void MainWindow::on_btnBack_clicked()
 void MainWindow::on_prgTime_sliderReleased()
 {
     this->player->setPosition(this->ui->prgTime->value());
+}
+
+void MainWindow::on_btnClose_2_clicked()
+{
+    DialogForm();
+    music = QStringList();
+    SetMusicList();
+    pistNumber = 0;
+    UpdateLblName(music[pistNumber]);
 }
