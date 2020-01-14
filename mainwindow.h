@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QMediaPlayer>
 #include <QTimer>
+#include <QTime>
 #include <QDesktopWidget>
 
 QT_BEGIN_NAMESPACE
@@ -52,12 +53,12 @@ private:
     Ui::MainWindow *ui;
     QString path;
     QStringList music = QStringList();
-    double pistNumber = 0;
+    int pistNumber = 0;
     bool playPause = false; // False if not play
     bool fileExist = false; // False if file not exist
     QMediaPlayer *player = new QMediaPlayer();
-    qint64 musicDuration = 0;
-    int musicPosition = 0;
+    long long musicDuration = 0;
+    long long musicPosition = 0;
     QString configFilePath = "config.ini";
 
 };

@@ -124,8 +124,20 @@ void MainWindow::UpdateProgressBar()
 {
     this->musicPosition = player->position();
     this->musicDuration = player->duration();
-    this->ui->lblDuration->setText(QString::number((double)musicDuration / (60 * 1000),'f',2));
-    this->ui->lblPosition->setText(QString::number((double)musicPosition / 100000,'f',2));
+
+    int seconds = (musicDuration/1000) % 60;
+    int minutes = (musicDuration/60000) % 60;
+    int hours = (musicDuration/3600000) % 24;
+    QTime *timeDuration = new QTime(hours, minutes,seconds);
+    seconds = (musicPosition/1000) % 60;
+    minutes = (musicPosition/60000) % 60;
+    hours = (musicPosition/3600000) % 24;
+    QTime *timePosition = new QTime(hours,minutes,seconds);
+    //this->ui->lblDuration->setText(QString::number((double)musicDuration / (60 * 1000),'f',2));
+    //this->ui->lblPosition->setText(QString::number((double)musicPosition / (60 * 1000),'f',2));
+    this->ui->lblDuration->setText(timeDuration->toString());
+    this->ui->lblPosition->setText(timePosition->toString());
+
     this->ui->prgTime->setMinimum(0);
     this->ui->prgTime->setMaximum(musicDuration);
     this->ui->prgTime->setValue(musicPosition);
