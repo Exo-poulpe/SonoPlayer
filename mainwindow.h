@@ -35,8 +35,6 @@ private slots:
 
     void UpdateProgressBar();
 
-    void EndOfSong();
-
     void on_prgTime_sliderReleased();
 
     void on_btnClose_2_clicked();
@@ -47,7 +45,7 @@ private:
     QString CleanName(QString path);
     void SetMusicList();
     void UpdateLblName(QString songName);
-    void MainWindow::DialogForm();
+    void DialogForm();
     QString ReadFirstLineFile(QString path);
     QTimer *tmr = new QTimer;
     Ui::MainWindow *ui;

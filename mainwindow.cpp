@@ -35,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->move(rec.width()-240,rec.height()-135);
     //tmr->callOnTimeout(SLOT(UpdateProgressBar()),Qt::AutoConnection);
     QObject::connect(tmr, SIGNAL(timeout()), this, SLOT(UpdateProgressBar()), Qt::AutoConnection);
-    connect(player, SIGNAL(player.positionChanged()),this,SLOT(EndOfSong()));
     player->seekableChanged(true);
     this->ui->lblName->setText(CleanName(this->path));
     SetMusicList();
@@ -89,14 +88,6 @@ QString MainWindow::CleanName(QString path)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::EndOfSong()
-{
-    if(this->player->position() == this->player->duration())
-    {
-        this->on_btnNext_clicked();
-    }
 }
 
 void MainWindow::UpdateLblName(QString songName)
