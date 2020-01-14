@@ -220,6 +220,7 @@ void MainWindow::on_btnBack_clicked()
 void MainWindow::on_prgTime_sliderReleased()
 {
     this->player->setPosition(this->ui->prgTime->value());
+    this->tmr->start();
 }
 
 void MainWindow::on_btnClose_2_clicked()
@@ -229,4 +230,10 @@ void MainWindow::on_btnClose_2_clicked()
     SetMusicList();
     pistNumber = 0;
     UpdateLblName(music[pistNumber]);
+}
+
+
+void MainWindow::on_prgTime_sliderPressed()
+{
+    this->tmr->stop();
 }

@@ -40,6 +40,8 @@ private slots:
 
     void on_btnClose_2_clicked();
 
+    void on_prgTime_sliderPressed();
+
 private:
     QString CleanName(QString path);
     void SetMusicList();
